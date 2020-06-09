@@ -11,7 +11,7 @@ class CNN(tf.Module):
 		self.conv3 = Conv2D(128, 256, (3, 3), (1, 1), activation=tf.nn.selu, name='conv3')
 		self.conv4 = Conv2D(256, 512, (3, 3), (1, 1), activation=tf.nn.selu, name='conv4')
 
-		self.fc1 = Dense(147968, 128, activation=tf.nn.selu, name='fc1')
+		self.fc1 = Dense(131072, 128, activation=tf.nn.selu, name='fc1')
 		self.fc2 = Dense(128, 256, activation=tf.nn.selu, name='fc2')
 		self.fc3 = Dense(256, 10, activation=tf.nn.softmax, name='out')
 
@@ -39,6 +39,7 @@ class CNN(tf.Module):
 		X = self.conv3(X)
 		X = tf.nn.max_pool2d(X, 2, 1, 'VALID')
 		X = self.conv4(X)
+		X = tf.nn.max_pool2d(X, 2, 1, 'VALID')
 
 		X = tf.reshape(X, [-1, X.shape[1] * X.shape[2] * X.shape[3]])
 
